@@ -23,9 +23,10 @@ from config import (
 # matplotlib.use('TkAgg')
 
 
-def main(force_recompute=False):
-    file_name = HDF5_FILE
-    image_index = 8
+def main(force_recompute=False, file_name=None):
+    if file_name is None:
+        file_name = HDF5_FILE  # default from config.py
+        image_index = 8
 
     # === Define known x-centers for spectral lines ===
     x_center_1188 = 1424
@@ -125,9 +126,20 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description="Run Bragg engine with optional optimization recalculation.")
-    parser.add_argument("--force-recompute", action="store_true")
+    parser.add_argument("file_name", nargs="?", help="Path to HDF5 file (optional, default from config.py)")
+    parser.add_argument("--force-recompute", action="store_true", help="Force recalculation of optimized parameters.")
     args = parser.parse_args()
-    main(force_recompute=args.force_recompute)
+
+    main(force_recompute=args.force_recompute, file_name=args.file_name)
+
+
+# if __name__ == "__main__":
+#     import argparse
+#
+#     parser = argparse.ArgumentParser(description="Run Bragg engine with optional optimization recalculation.")
+#     parser.add_argument("--force-recompute", action="store_true")
+#     args = parser.parse_args()
+#     main(force_recompute=args.force_recompute)
 
 # import os
 # import numpy as np

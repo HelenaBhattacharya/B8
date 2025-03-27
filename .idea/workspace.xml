@@ -4,63 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4543595e-e856-4bf5-b563-17b26f451e41" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/25TH MARCH VERSION.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bragg_engine/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bragg_engine/curve_fitting.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bragg_engine/energy_resolution.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bragg_engine/load.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bragg_engine/mapping.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bragg_engine/optimisation.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bragg_engine/preprocessing.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bragg_engine/solid_angle.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bragg_engine/tests/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bragg_engine/tests/test_curve_fitting.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bragg_engine/tests/test_energy_resolution.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bragg_engine/tests/test_load.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bragg_engine/tests/test_mapping.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bragg_engine/tests/test_optimisation.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bragg_engine/tests/test_preprocessing.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bragg_engine/tests/test_solid_angle.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bragg_engine/tests/visual_tests.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bragg_engine/visualisation.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fitted_sigma_1188.npy" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fitted_sigma_1218.npy" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/optimized_params.npy" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/quadratic_params.npy" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/run_bragg_engine.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/run_spc_engine.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/run_spectral_reconstruction.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/run_synthetic_engine.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/run_unit_tests.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spc_engine/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spc_engine/high_ADU.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spc_engine/intensity_error.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spc_engine/pedestal.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spc_engine/spc.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spc_engine/tests/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spc_engine/tests/test_high_ADU.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spc_engine/tests/test_pedestal.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spc_engine/tests/test_spc.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spc_engine/tests/visual_tests.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spc_engine/visualisation.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spectral_reconstruction/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spectral_reconstruction/spectral_processing.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spectral_reconstruction/tests/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spectral_reconstruction/tests/test_spectral_processing.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spectral_reconstruction/tests/visual_tests.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spectral_reconstruction/visualisation.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sxro6416-r0504.h5" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/synthetic_engine/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/synthetic_engine/detector.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/synthetic_engine/detector_params.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/synthetic_engine/synthetic_generator.py" afterDir="false" />
+    <list default="true" id="4543595e-e856-4bf5-b563-17b26f451e41" name="Changes" comment="gitignore">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,6 +22,12 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "HelenaBhattacharya"
+  }
+}]]></component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
     "url": "https://github.com/HelenaBhattacharya/B8.git",
@@ -141,12 +92,51 @@
       <option name="presentableId" value="Default" />
       <updated>1742940886486</updated>
       <workItem from="1742940888101" duration="24919000" />
-      <workItem from="1743032465014" duration="24715000" />
+      <workItem from="1743032465014" duration="26221000" />
     </task>
+    <task id="LOCAL-00001" summary="V1">
+      <option name="closed" value="true" />
+      <created>1743102301281</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1743102301281</updated>
+    </task>
+    <task id="LOCAL-00002" summary="V1">
+      <option name="closed" value="true" />
+      <created>1743102516467</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1743102516467</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Sample of spc_engine output">
+      <option name="closed" value="true" />
+      <created>1743103643629</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1743103643629</updated>
+    </task>
+    <task id="LOCAL-00004" summary="gitignore">
+      <option name="closed" value="true" />
+      <created>1743103660065</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1743103660065</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="V1" />
+    <MESSAGE value="Sample of spc_engine output" />
+    <MESSAGE value="gitignore" />
+    <option name="LAST_COMMIT_MESSAGE" value="gitignore" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/25TH_MARCH_VERSION$run_spc_engine.coverage" NAME="run_spc_engine Coverage Results" MODIFIED="1743032879758" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
