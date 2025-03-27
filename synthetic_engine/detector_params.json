@@ -1,0 +1,10 @@
+{
+  "array_size": [2048, 2048],
+  "pixel_size_microns": 13.5,
+  "dark_current_e_per_px_s": 0.01,
+  "readout_noise_e_rms": 4.0,
+  "adc_bit_depth": 16,
+  "adc_gain_e_per_adu": 1.5,
+  "full_well_capacity_e": 100000,
+  "charge_spread_sigma_pixels": 0.5
+}
