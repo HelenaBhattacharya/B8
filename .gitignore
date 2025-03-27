@@ -1,0 +1,36 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+venv/
+env/
+
+# OS files
+.DS_Store
+
+# IDE files
+.idea/
+.vscode/
+
+# CMA-ES output
+outcmaes/
+
+# Ignore large numeric folders with per-image output
+[0-9]*/
+1[0-9]*/
+
+# Ignore heavy output files (keep example small ones if needed)
+*.npy
+*.pkl
+*.csv
+
+# Exceptions (files and folders you DO want to keep)
+!8/
+!8/**
+!optimized_params.npy
+!quadratic_params.npy
+!fitted_sigma_1188.npy
+!fitted_sigma_1218.npy
+!requirements.txt
+!config.py
