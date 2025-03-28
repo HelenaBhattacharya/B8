@@ -187,9 +187,8 @@ def run_spectral_reconstruction(filename=HDF5_FILE, image_index=None):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run spectral reconstruction with SPC and high-ADU processing.")
-    parser.add_argument("--file_name", type=str, default=HDF5_FILE, help="HDF5 file with CCD images.")
+    parser.add_argument("file_name", nargs="?", default=HDF5_FILE, help="HDF5 file with CCD images.")
     parser.add_argument("--image_index", type=int, help="Index of single image to process (optional).")
 
     args = parser.parse_args()
     run_spectral_reconstruction(filename=args.file_name, image_index=args.image_index)
-

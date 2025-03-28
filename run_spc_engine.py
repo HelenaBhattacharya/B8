@@ -24,10 +24,12 @@ from config import HDF5_FILE, CCD_SHAPE, HIGH_ADU_PIXEL_THRESHOLD, MAX_IMAGES
 CCD_SIZE = CCD_SHAPE
 
 def run_spc_engine(file_name=HDF5_FILE, single_image=None):
-
+    print(f"Using file: {file_name}")
     if single_image is not None:
+        print(f"Processing single image index: {single_image}")
         process_single_image(file_name, single_image)
     else:
+        print(" Processing all images...")
         process_all_images(file_name)
 
 def process_single_image(file_name, image_index):
