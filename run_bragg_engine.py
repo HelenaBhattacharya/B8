@@ -26,9 +26,10 @@ from config import (
 
 
 def main(force_recompute=False, file_name=None):
+    image_index = 8  # Always process image index 8
+
     if file_name is None:
-        file_name = HDF5_FILE  # default from config.py
-        image_index = 8
+        file_name = HDF5_FILE  # fallback to default in config.py
 
     # === Define known x-centers for spectral lines ===
     x_center_1188 = CURVE_CENTER_1188_INIT
