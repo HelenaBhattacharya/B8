@@ -124,7 +124,6 @@ def main(force_recompute=False, file_name=None):
     print(f"Sample: {high_adu_positions[:10]}")
     plot_summed_image(summed_image)
 
-
 if __name__ == "__main__":
     import argparse
 
@@ -134,4 +133,3 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     main(force_recompute=args.force_recompute, file_name=args.file_name)
-
