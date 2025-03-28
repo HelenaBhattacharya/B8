@@ -13,7 +13,7 @@ from config import (
     CCD_SHAPE,
     PIXEL_SIZE,
     CCD_CENTER_X,
-    CCD_CENTER_Y,
+    CCD_CENTER_Y, CURVE_CENTER_1188_INIT, CURVE_CENTER_1218_INIT, ENERGY_LEVELS,
 )
 
 @pytest.mark.visual
@@ -81,8 +81,8 @@ def visual_optimized_vs_experimental_test():
     y_prime_reindexed = y_prime / PIXEL_SIZE + CCD_CENTER_Y
 
     y_exp = np.linspace(0, CCD_SHAPE[0], 500)
-    x_center_1188 = 1424
-    x_center_1218 = 1284
+    x_center_1188 = CURVE_CENTER_1188_INIT
+    x_center_1218 = CURVE_CENTER_1218_INIT
 
     x_exp_1188, y_exp_1188 = parametric_curve(y_exp, *quadratic_params["1188eV"][:2], x_center_1188, CCD_CENTER_Y)
     x_exp_1218, y_exp_1218 = parametric_curve(y_exp, *quadratic_params["1218.5eV"][:2], x_center_1218, CCD_CENTER_Y)
@@ -91,7 +91,8 @@ def visual_optimized_vs_experimental_test():
     plt.imshow(np.zeros(CCD_SHAPE), cmap='gray', origin='upper', extent=[0, CCD_SHAPE[1], CCD_SHAPE[0], 0])
     plt.title("Comparison of Theoretical and Experimental Isoenergy Fits")
 
-    for level, color in zip([1188, 1218.5], ['cyan', 'white']):
+    # Corrected line:
+    for level, color in zip(ENERGY_LEVELS, ['cyan', 'white']):
         plt.contour(x_prime_reindexed, y_prime_reindexed, E_ij, levels=[level], colors=color, linewidths=1.0)
 
     plt.plot(x_exp_1188, y_exp_1188, 'r--', linewidth=1.0, label="Exp. 1188 eV")

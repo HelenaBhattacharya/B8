@@ -5,12 +5,13 @@ from bragg_engine.curve_fitting import (
     extract_peak_x,
     fit_quadratic_curve
 )
+from config import CCD_SHAPE, CCD_CENTER_X, CCD_CENTER_Y
 
 # Mock data setup (simple synthetic Gaussian peaks)
 @pytest.fixture
 def mock_image():
-    img = np.zeros((2048, 2048))
-    x_center, y_center = 1024, 1024
+    img = np.zeros(CCD_SHAPE)
+    x_center, y_center = CCD_CENTER_X, CCD_CENTER_Y
 
     # Create synthetic peaks along a known quadratic curve
     for y in range(100, 1900, 100):
@@ -22,7 +23,7 @@ def mock_image():
     return img
 
 def test_parametric_curve():
-    x_center, y_center = 1024, 1024
+    x_center, y_center = CCD_CENTER_X, CCD_CENTER_Y
     y = np.array([1024, 1100, 1200])
     a, b = 5e-5, 1e-2
     x, y_out = parametric_curve(y, a, b, x_center, y_center)
@@ -35,7 +36,7 @@ def test_parametric_curve():
     assert np.isclose(x_central, x_center), "Curve does not pass through center."
 
 def test_extract_peak_x(mock_image):
-    x_center, y_center = 1024, 1024
+    x_center, y_center = CCD_CENTER_X, CCD_CENTER_Y
     x_coords, y_coords, sigma_values = extract_peak_x(mock_image, x_center, y_center, num_sections=18)
 
     # Check correct shapes
@@ -49,7 +50,7 @@ def test_extract_peak_x(mock_image):
     assert np.nanmean(sigma_values) > 0, "Average sigma should be positive."
 
 def test_fit_quadratic_curve(mock_image, tmp_path):
-    x_center, y_center = 1024, 1024
+    x_center, y_center = CCD_CENTER_X, CCD_CENTER_Y
     save_path = tmp_path / "sigma_values.npy"
 
     coeffs = fit_quadratic_curve(mock_image, x_center, y_center, save_sigma_path=str(save_path))

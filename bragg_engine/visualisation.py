@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from config import PIXEL_SIZE
+from config import PIXEL_SIZE, CCD_SHAPE, CCD_CENTER_X, CCD_CENTER_Y, CURVE_CENTER_1188_INIT,CURVE_CENTER_1218_INIT, ENERGY_LEVELS
 from bragg_engine.curve_fitting import parametric_curve  # Import quadratic fit function
 from bragg_engine.curve_fitting import parametric_curve
 
@@ -16,9 +16,9 @@ def plot_image(image, title, cmap='viridis', log_scale=False):
     """
     plt.figure(figsize=(8, 6))
     if log_scale:
-        plt.imshow(np.log1p(image), cmap=cmap, origin='upper', extent=[0, 2048, 2048, 0])
+        plt.imshow(np.log1p(image), cmap=cmap, origin='upper', extent=[0, CCD_SHAPE[1], CCD_SHAPE[0], 0])
     else:
-        plt.imshow(image, cmap=cmap, origin='upper', extent=[0, 2048, 2048, 0])
+        plt.imshow(image, cmap=cmap, origin='upper', extent=[0, CCD_SHAPE[1], CCD_SHAPE[0], 0])
     plt.colorbar(label='Intensity')
     plt.title(title)
     plt.xlabel('Pixel X')
@@ -35,16 +35,16 @@ def plot_fitted_curves(image, coeffs_1188_exp, coeffs_1218_exp):
         coeffs_1218_exp (tuple): Experimental fit coefficients for 1218.5 eV.
     """
     plt.figure(figsize=(8, 6))
-    plt.imshow(image, cmap='hot', origin='upper', extent=[0, 2048, 2048, 0])
+    plt.imshow(image, cmap='hot', origin='upper', extent=[0, CCD_SHAPE[1], CCD_SHAPE[0], 0])
     plt.colorbar(label='Normalized Intensity')
 
     # Define y-range
     y_values = np.linspace(0, image.shape[0] - 1, 1000)
-    y_relative = y_values - 1024  # Fixing Center-to-Upper Origin Issue
+    y_relative = y_values - CCD_CENTER_Y  # Fixing Center-to-Upper Origin Issue
 
     # Compute experimental quadratic fits
-    x_fit_1188_exp = coeffs_1188_exp[0] * y_relative ** 2 + coeffs_1188_exp[1] * y_relative + 1424
-    x_fit_1218_exp = coeffs_1218_exp[0] * y_relative ** 2 + coeffs_1218_exp[1] * y_relative + 1284
+    x_fit_1188_exp = coeffs_1188_exp[0] * y_relative ** 2 + coeffs_1188_exp[1] * y_relative + CURVE_CENTER_1188_INIT
+    x_fit_1218_exp = coeffs_1218_exp[0] * y_relative ** 2 + coeffs_1218_exp[1] * y_relative + CURVE_CENTER_1218_INIT
 
     # Plot experimental fits
     plt.plot(x_fit_1188_exp, y_values, 'lime', linewidth=0.5, linestyle='dashed', label="Exp. 1188 eV")
@@ -56,7 +56,7 @@ def plot_fitted_curves(image, coeffs_1188_exp, coeffs_1218_exp):
     plt.legend()
     plt.show()
 
-def plot_energy_map(image, energy_map, x_prime, y_prime, energy_levels=[1188, 1218.5]):
+def plot_energy_map(image, energy_map, x_prime, y_prime, energy_levels=ENERGY_LEVELS):
     """
     Overlays theoretical isoenergy curves from the energy mapping onto the CCD image.
 
@@ -70,7 +70,7 @@ def plot_energy_map(image, energy_map, x_prime, y_prime, energy_levels=[1188, 12
     plt.figure(figsize=(8, 6))
 
     # Ensure the CCD image is displayed in correct pixel space (0 to 2048)
-    extent = [0, 2048, 2048, 0]
+    extent=[0, CCD_SHAPE[1], CCD_SHAPE[0], 0]
 
     # Plot the preprocessed CCD image
     plt.imshow(image, cmap='hot', origin='upper', extent=extent)
@@ -91,23 +91,20 @@ def plot_energy_map(image, energy_map, x_prime, y_prime, energy_levels=[1188, 12
     plt.show()
 
 
-def plot_curve_comparison(quadratic_params_file, optimized_quadratic_params_file, ccd_shape=(2048, 2048)):
-    """
-    Load the quadratic and optimized parameters and plot their corresponding curves on a blank CCD.
-    """
+def plot_curve_comparison(quadratic_params_file, optimized_quadratic_params_file):
     quadratic_params = np.load(quadratic_params_file, allow_pickle=True).item()
     optimized_quadratic_params = np.load(optimized_quadratic_params_file, allow_pickle=True)
 
     # Extract parameters
     a_1188, b_1188, c_1188 = quadratic_params["1188eV"]
     a_1218, b_1218, c_1218 = quadratic_params["1218.5eV"]
-    a_opt, b_opt, c_opt = optimized_quadratic_params  # Now correctly extracting 3 values
+    a_opt, b_opt, c_opt = optimized_quadratic_params
 
-    y_values = np.linspace(0, ccd_shape[0] - 1, 500)
-    x_opt, _ = parametric_curve(y_values, a_opt, b_opt, c_opt, 1024)
+    y_values = np.linspace(0, CCD_SHAPE[0] - 1, 500)
+    x_opt, _ = parametric_curve(y_values, a_opt, b_opt, c_opt, CCD_CENTER_Y)
 
     plt.figure(figsize=(8, 8))
-    plt.imshow(np.zeros(ccd_shape), cmap='gray', extent=[0, ccd_shape[1], ccd_shape[0], 0])
+    plt.imshow(np.zeros(CCD_SHAPE), cmap='gray', extent=[0, CCD_SHAPE[1], CCD_SHAPE[0], 0])
     plt.plot(x_opt, y_values, label="Optimized Fit", color='cyan', linestyle='-', linewidth=1.5)
 
     plt.xlabel("CCD X (pixels)")

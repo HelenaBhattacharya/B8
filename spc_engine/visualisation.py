@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-
+from config import CCD_SHAPE
 
 def plot_full_histogram(pixel_values, mu_fit, sigma_fit, bins):
     """Plot the full pixel intensity histogram with Gaussian fit before pedestal subtraction."""
@@ -47,7 +47,7 @@ def plot_corrected_histogram(corrected_pixel_values, bins):
 def plot_original_ccd_image(image):
     """Plot the original CCD image before pedestal removal."""
     plt.figure(figsize=(8, 6))
-    plt.imshow(image, cmap='hot', origin='upper')
+    plt.imshow(image, cmap='hot', origin='upper', extent=[0, CCD_SHAPE[1], CCD_SHAPE[0], 0])
     plt.colorbar(label='Pixel Intensity (ADU)')
     plt.title('Original CCD Image Before Pedestal Removal')
     plt.xlabel('Pixel X')
@@ -57,7 +57,7 @@ def plot_original_ccd_image(image):
 def plot_corrected_ccd_image(corrected_image):
     """Plot the corrected CCD image after pedestal removal."""
     plt.figure(figsize=(8, 6))
-    plt.imshow(corrected_image, cmap='hot', origin='upper')
+    plt.imshow(corrected_image, cmap='hot', origin='upper', extent=[0, CCD_SHAPE[1], CCD_SHAPE[0], 0])
     plt.colorbar(label='Pixel Intensity (ADU) After Pedestal Subtraction')
     plt.title('Corrected CCD Image After Pedestal Removal')
     plt.xlabel('Pixel X')

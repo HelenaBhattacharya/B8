@@ -19,7 +19,7 @@ from spc_engine.high_ADU import (
     save_ccd_image
 )
 
-from config import HDF5_FILE, CCD_SHAPE, HIGH_ADU_PIXEL_THRESHOLD
+from config import HDF5_FILE, CCD_SHAPE, HIGH_ADU_PIXEL_THRESHOLD, MAX_IMAGES
 
 CCD_SIZE = CCD_SHAPE
 
@@ -57,7 +57,7 @@ def process_single_image(file_name, image_index):
 def process_all_images(file_name):
     print("\nProcessing all 20 images sequentially...\n")
 
-    images = load_ccd_images(file_name, num_images=20)
+    images = load_ccd_images(file_name, num_images=MAX_IMAGES)
 
     for i, image in enumerate(images):
         print(f"\nProcessing image {i}...\n")

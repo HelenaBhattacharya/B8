@@ -9,6 +9,7 @@ from bragg_engine.energy_resolution import (
     calc_total_energy_resolution,
 )
 from bragg_engine.mapping import compute_energy_map, pixel_size
+from config import CCD_SHAPE
 
 # Mock values for testing (use realistic test values)
 
@@ -67,7 +68,7 @@ def test_calc_total_energy_resolution():
 
 
 def test_compute_energy_dispersion_invalid():
-    E_ij = np.full((2048, 2048), np.nan)  # Invalid energy map
-    x_prime = np.zeros((2048, 2048))
+    E_ij = np.full((CCD_SHAPE), np.nan)  # Invalid energy map
+    x_prime = np.zeros(CCD_SHAPE)
     with pytest.raises(ValueError):
         compute_energy_dispersion(E_ij, x_prime, TEST_ENERGY_LEVEL)

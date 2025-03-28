@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from config import CCD_SHAPE
 
 def plot_photon_counts_vs_energy(bin_centers, hist_counts, title="Summed X-ray Spectrum (All Images)"):
     """Plots photon counts vs. energy."""
@@ -135,8 +136,8 @@ def plot_ccd_hits(x_hits_combined, y_hits_combined):
     plt.xlabel("CCD X Position")
     plt.ylabel("CCD Y Position")
     plt.title("Photon Hits on CCD (All Images Combined)")
-    plt.xlim(0, 2048)
-    plt.ylim(2048, 0)  # Explicitly set limits to invert y-axis
+    plt.xlim(0, CCD_SHAPE[1])
+    plt.ylim(CCD_SHAPE[0], 0)
     plt.legend(markerscale=4)
     plt.grid(False)
     plt.show()
@@ -174,7 +175,7 @@ def plot_extracted_spectrum_lineout(bin_centers, hist_counts):
 def plot_summed_image(summed_image):
     """Plots summed CCD image for diagnostic purposes."""
     plt.figure(figsize=(8, 6))
-    plt.imshow(summed_image, cmap='hot', origin='upper')
+    plt.imshow(summed_image, cmap='hot', origin='upper', extent=[0, CCD_SHAPE[1], CCD_SHAPE[0], 0])
     plt.colorbar(label='Summed Pixel Intensity (ADU)')
     plt.title('Summed CCD Image (Diagnostic)')
     plt.xlabel('Pixel X')
@@ -184,7 +185,7 @@ def plot_summed_image(summed_image):
 def plot_high_adu_positions(summed_image, high_adu_positions):
     """Plots high-ADU positions on summed CCD."""
     plt.figure(figsize=(8, 6))
-    plt.imshow(summed_image, cmap='hot', origin='upper')
+    plt.imshow(summed_image, cmap='hot', origin='upper', extent=[0, CCD_SHAPE[1], CCD_SHAPE[0], 0])
     if high_adu_positions:
         y_coords, x_coords = zip(*high_adu_positions)
         plt.scatter(x_coords, y_coords, color='cyan', s=5, label="High-ADU Pixels")

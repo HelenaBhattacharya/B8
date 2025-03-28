@@ -3,7 +3,7 @@ import pickle
 import pandas as pd
 import os
 import matplotlib.pyplot as plt
-from config import HIGH_ADU_PIXEL_THRESHOLD, HIGH_ADU_CLUSTER_THRESHOLDS
+from config import HIGH_ADU_PIXEL_THRESHOLD, HIGH_ADU_CLUSTER_THRESHOLDS, CCD_SHAPE
 
 def load_high_ADU_clusters(file_path):
     """Load high ADU clusters from a Pickle file."""
@@ -18,7 +18,7 @@ def apply_ADU_threshold(high_adu_clusters, threshold_ADU=HIGH_ADU_PIXEL_THRESHOL
         cluster["total_ADU"] = sum(adu for _, _, adu in cluster["pixels"])
     return high_adu_clusters
 
-def redistribute_charge(high_adu_clusters, ccd_size=(2048, 2048)):
+def redistribute_charge(high_adu_clusters, ccd_size=CCD_SHAPE):
     """Redistribute charge based on total ADU and assign photons."""
     ccd_thresholded = np.zeros(ccd_size, dtype=np.float32)
     ccd_redistributed = np.zeros(ccd_size, dtype=np.float32)
@@ -80,7 +80,7 @@ def save_ccd_image(ccd_redistributed, npy_filename):
     print(f"Charge-redistributed CCD saved to '{npy_filename}'.")
 
 
-def process_high_ADU(image_index, ccd_size=(2048,2048), plot_results=True):
+def process_high_ADU(image_index, ccd_size=CCD_SHAPE, plot_results=True):
     folder = str(image_index)
     os.makedirs(folder, exist_ok=True)
 
@@ -90,7 +90,7 @@ def process_high_ADU(image_index, ccd_size=(2048,2048), plot_results=True):
 
     # Load and process clusters
     high_adu_clusters = load_high_ADU_clusters(high_adu_file)
-    high_adu_clusters = apply_ADU_threshold(high_adu_clusters, threshold_ADU=20)
+    high_adu_clusters = apply_ADU_threshold(high_adu_clusters, threshold_ADU=HIGH_ADU_PIXEL_THRESHOLD)
     ccd_thresholded, ccd_redistributed, ccd_photon_hits, num_photon_hits, photon_counts = redistribute_charge(high_adu_clusters, ccd_size=ccd_size)
 
     # Save results

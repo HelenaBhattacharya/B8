@@ -3,7 +3,7 @@ from scipy.optimize import curve_fit
 from scipy.signal import savgol_filter
 from bragg_engine.preprocessing import preprocess_image
 from bragg_engine.load import get_ccd_image
-
+from config import CCD_CENTER_X, CCD_CENTER_Y
 
 # Define Quadratic Parametric Curve Function
 def parametric_curve(y, a, b, x_center, y_center):
@@ -96,7 +96,7 @@ def fit_quadratic_curve(image, x_center, y_center, save_sigma_path=None):
     optimized_x_coords, optimized_y_coords, sigma_values = extract_peak_x(image, x_center, y_center)
 
     # Convert to CCD-centered coordinates
-    S_exp = np.column_stack((optimized_x_coords - 1024, optimized_y_coords - 1024))
+    S_exp = np.column_stack((optimized_x_coords - CCD_CENTER_X, optimized_y_coords - CCD_CENTER_Y))
 
     # Perform quadratic fitting
     coeffs, residuals, _, _, _ = np.polyfit(S_exp[:, 1], S_exp[:, 0], 2, full=True)

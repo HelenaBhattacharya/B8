@@ -3,7 +3,7 @@ import cma  # CMA-ES optimizer
 from scipy.interpolate import interp1d
 from bragg_engine.mapping import compute_energy_map
 from bragg_engine.curve_fitting import parametric_curve
-from config import ENERGY_LEVELS, PIXEL_SIZE, PARAM_BOUNDS, INITIAL_PARAMS
+from config import ENERGY_LEVELS, PIXEL_SIZE, PARAM_BOUNDS, INITIAL_PARAMS,CCD_CENTER_X, CCD_CENTER_Y, CURVE_CENTER_1218_INIT, CURVE_CENTER_1188_INIT, CCD_SHAPE
 
 def load_experimental_fits():
     """
@@ -14,9 +14,9 @@ def load_experimental_fits():
     a_1218, b_1218, _ = quadratic_params["1218.5eV"]
 
     # Ensure y_exp matches the old version exactly
-    y_exp = np.linspace(0, 2047, 500)
-    x_exp_1188, y_exp_1188 = parametric_curve(y_exp, a_1188, b_1188, 1424, 1024)
-    x_exp_1218, y_exp_1218 = parametric_curve(y_exp, a_1218, b_1218, 1284, 1024)
+    y_exp = np.linspace(0, CCD_SHAPE[0] - 1, 500)
+    x_exp_1188, y_exp_1188 = parametric_curve(y_exp, a_1188, b_1188, CURVE_CENTER_1188_INIT, CCD_CENTER_Y)
+    x_exp_1218, y_exp_1218 = parametric_curve(y_exp, a_1218, b_1218, CURVE_CENTER_1218_INIT, CCD_CENTER_Y)
 
     return (x_exp_1188, y_exp_1188), (x_exp_1218, y_exp_1218)
 
@@ -44,8 +44,8 @@ def loss_function(params, x_exp_1188, y_exp_1188, x_exp_1218, y_exp_1218):
     E_ij, x_prime, y_prime = compute_energy_map(params)
 
     # Convert to CCD-centered coordinates
-    x_prime_reindexed = x_prime / PIXEL_SIZE + 1024
-    y_prime_reindexed = y_prime / PIXEL_SIZE + 1024
+    x_prime_reindexed = x_prime / PIXEL_SIZE + CCD_CENTER_X
+    y_prime_reindexed = y_prime / PIXEL_SIZE + CCD_CENTER_Y
 
     contour_points = {}
     for energy in ENERGY_LEVELS:
@@ -95,4 +95,4 @@ def compute_optimized_energy_map():
     E_ij_opt, x_prime, y_prime = compute_energy_map(optimized_params)
 
     # No need to re-create meshgrid; return values directly
-    return E_ij_opt, x_prime / PIXEL_SIZE + 1024, y_prime / PIXEL_SIZE + 1024
+    return E_ij_opt, x_prime / PIXEL_SIZE + CCD_CENTER_X, y_prime / PIXEL_SIZE + CCD_CENTER_Y

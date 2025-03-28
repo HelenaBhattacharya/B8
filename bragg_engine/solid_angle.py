@@ -37,27 +37,3 @@ def compute_solid_angle(x_prime, y_prime, D, theta_bar_B, R):
     Omega = (D_prime * PIXEL_SIZE ** 2) / ((x_double ** 2 + y_double ** 2 + D_prime ** 2) ** (3 / 2))
 
     return Omega
-
-
-#
-# import numpy as np
-# from bragg_engine.mapping import pixel_size, rotation_matrix
-#
-# def compute_solid_angle(x_prime, y_prime, D, theta_bar_B, R):
-#     """Compute the solid angle contribution for each pixel."""
-#     theta_bar_B = np.radians(theta_bar_B)  # Convert to radians
-#     z_prime = np.dot(R, np.array([0, 0, 1]))  # Rotate lab z-axis
-#
-#     r0 = D * np.array([np.cos(theta_bar_B), 0, np.sin(theta_bar_B)])
-#     D_prime = np.dot(z_prime, r0)
-#     x0 = D_prime * z_prime
-#     x0_prime = r0 - x0
-#
-#     r_ij_prime = np.stack([-x_prime, y_prime, np.zeros_like(x_prime)], axis=-1)
-#     x_double_prime = r_ij_prime + np.einsum('ij,j->i', np.linalg.inv(R), x0_prime)
-#
-#     x_double = x_double_prime[..., 0]
-#     y_double = x_double_prime[..., 1]
-#
-#     Omega = (D_prime * pixel_size ** 2) / ((x_double ** 2 + y_double ** 2 + D_prime ** 2) ** (3 / 2))
-#     return Omega
