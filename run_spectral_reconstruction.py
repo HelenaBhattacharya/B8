@@ -179,7 +179,7 @@ def run_spectral_reconstruction(filename=HDF5_FILE, image_index=None):
         print_array_sample("Summed solid-angle per bin (Omega_E)", Omega_E)
         print_array_sample("Corrected errors (sqrt(N)/Omega)", corrected_count_errors)
         print_array_sample("Corrected intensity errors (sqrt(N)*E/Omega)", corrected_intensity_errors)
-        print_array_sample("Percent Poisson Error (%)", percent_errors)
+        print(f"Percent Poisson Error (%): min = {np.min(percent_errors):.3f}, max = {np.max(percent_errors):.3f}")
 
     else:
         print("No photon data collected. Check inputs.")
