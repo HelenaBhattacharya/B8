@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4543595e-e856-4bf5-b563-17b26f451e41" name="Changes" comment="V5">
+    <list default="true" id="4543595e-e856-4bf5-b563-17b26f451e41" name="Changes" comment="V6">
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -94,7 +95,7 @@
       <workItem from="1742940888101" duration="24919000" />
       <workItem from="1743032465014" duration="26221000" />
       <workItem from="1743105187948" duration="142000" />
-      <workItem from="1743157405883" duration="5642000" />
+      <workItem from="1743157405883" duration="7651000" />
     </task>
     <task id="LOCAL-00001" summary="V1">
       <option name="closed" value="true" />
@@ -176,7 +177,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743181392733</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="V6">
+      <option name="closed" value="true" />
+      <created>1743182654068</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1743182654068</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -190,16 +199,17 @@
     <MESSAGE value="V3" />
     <MESSAGE value="V4" />
     <MESSAGE value="V5" />
-    <option name="LAST_COMMIT_MESSAGE" value="V5" />
+    <MESSAGE value="V6" />
+    <option name="LAST_COMMIT_MESSAGE" value="V6" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/25TH_MARCH_VERSION$run_spc_engine.coverage" NAME="run_spc_engine Coverage Results" MODIFIED="1743032879758" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/25TH_MARCH_VERSION$run_spc_engine.coverage" NAME="run_spc_engine Coverage Results" MODIFIED="1743182476361" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/25TH_MARCH_VERSION$.coverage" NAME=" Coverage Results" MODIFIED="1742992064903" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/bragg_engine/tests" />
     <SUITE FILE_PATH="coverage/25TH_MARCH_VERSION$run_synthetic_engine.coverage" NAME="run_synthetic_engine Coverage Results" MODIFIED="1743095121688" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/25TH_MARCH_VERSION$visual_tests.coverage" NAME="visual_tests Coverage Results" MODIFIED="1743177395897" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/bragg_engine/tests" />
     <SUITE FILE_PATH="coverage/25TH_MARCH_VERSION$run_unit_tests.coverage" NAME="run_unit_tests Coverage Results" MODIFIED="1743178295626" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/25TH_MARCH_VERSION$run_bragg_engine.coverage" NAME="run_bragg_engine Coverage Results" MODIFIED="1743176928178" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/25TH_MARCH_VERSION$run_tests.coverage" NAME="run_tests Coverage Results" MODIFIED="1742982051145" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spc_engine/tests" />
-    <SUITE FILE_PATH="coverage/25TH_MARCH_VERSION$run_spectral_reconstruction.coverage" NAME="run_spectral_reconstruction Coverage Results" MODIFIED="1743181385662" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/25TH_MARCH_VERSION$run_spectral_reconstruction.coverage" NAME="run_spectral_reconstruction Coverage Results" MODIFIED="1743182627756" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
