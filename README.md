@@ -30,24 +30,23 @@ B8_Project_NEW/
 
 ### Clone the Repository
 
-Using SSH (if you have added your SSH key to GitHub):
+Using SSH (if you have added your SSH key to GitHub) or using HTTPS (recommended for most users):
 
 ```bash
 git clone git@github.com:HelenaBhattacharya/B8.git
 cd B8
 ```
-
-Or using HTTPS (recommended for most users):
-
-```bash
-git clone https://github.com/HelenaBhattacharya/B8.git
-cd B8
-```
-
 ---
 
+### Move into project folder
+```bash
+cd B8
+```
+Then confirm with:
+```bash
+ls
+```
 ### Set Up Your Environment
-
 Create a virtual environment and activate it:
 
 ```bash
@@ -117,7 +116,7 @@ This generates a synthetic CCD image using realistic photon hits and immediately
 Unit tests validating all components (Bragg, SPC, spectral reconstruction) can be run using:
 
 ```bash
-python run_unit_tests.py
+python3 run_unit_tests.py
 ```
 
 ---
@@ -130,7 +129,7 @@ A folder named `8/` is included in the repository to serve as a **precomputed sa
 - Photon hit maps
 - Final redistributed charge images
 
-This allows users to **run the spectral reconstruction pipeline immediately**, without first processing all 20 CCD images.
+This allows users to **run the spectral reconstruction pipeline immediately** for image 8, without first processing all 20 CCD images.
 
 To regenerate all image outputs locally, simply run:
 
