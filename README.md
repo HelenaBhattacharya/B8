@@ -34,7 +34,6 @@ Using SSH (if you have added your SSH key to GitHub) or using HTTPS (recommended
 
 ```bash
 git clone git@github.com:HelenaBhattacharya/B8.git
-cd B8
 ```
 ---
 
@@ -73,17 +72,20 @@ Each main component is executed via a `run_*.py` script from the project root.
 ### Bragg Engine
 
 ```bash
-python3 run_bragg_engine.py               # Uses default sxro6416-r0504.h5 from config.py
-python3 run_bragg_engine.py my_file.h5    # Run with a custom HDF5 input file
+python3 run_bragg_engine.py                                   # Uses default sxro6416-r0504.h5 from config.py
+python3 run_bragg_engine.py my_file.h5                        # Run with a custom HDF5 input file
+python3 run_bragg_engine.py my_new_file.h5 --force-recompute  # Run Bragg Engine to regenerate optimized_params.npy and quadratic_params.npy
 ```
+
+> ⚠️ Rerunning the CMA-ES optimisation can take **several minutes**.
 
 ---
 
 ### SPC Engine
 
 ```bash
-python3 run_spc_engine.py                         # Run SPC over all 20 images
-python3 run_spc_engine.py --single_image 8        # Run SPC on image index 8 only
+python3 run_spc_engine.py                                 # Run SPC over all 20 images
+python3 run_spc_engine.py --single_image 8                # Run SPC on image index 8 only
 python3 run_spc_engine.py my_file.h5 --single_image 3
 ```
 
@@ -94,8 +96,8 @@ python3 run_spc_engine.py my_file.h5 --single_image 3
 ### Spectral Reconstruction
 
 ```bash
-python3 run_spectral_reconstruction.py                 # Run over all available processed images
-python3 run_spectral_reconstruction.py --image_index 7 # Run for a single image
+python3 run_spectral_reconstruction.py                     # Run over all available processed images
+python3 run_spectral_reconstruction.py --image_index 7     # Run for a single image
 python3 run_spectral_reconstruction.py my_file.h5
 ```
 
