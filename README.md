@@ -34,14 +34,14 @@ Using SSH (if you have added your SSH key to GitHub):
 
 ```bash
 git clone git@github.com:HelenaBhattacharya/B8.git
-cd B8_Project_NEW
+cd B8
 ```
 
 Or using HTTPS (recommended for most users):
 
 ```bash
 git clone https://github.com/HelenaBhattacharya/B8.git
-cd B8_Project_NEW
+cd B8
 ```
 
 ---
