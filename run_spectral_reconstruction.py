@@ -29,8 +29,6 @@ from config import (
     ENERGY_MAX,
     BIN_WIDTH)
 
-# import matplotlib
-# matplotlib.use('TkAgg')  # Use TkAgg backend for interactive plots
 
 
 ENERGY_BINS = np.arange(ENERGY_MIN, ENERGY_MAX + BIN_WIDTH, BIN_WIDTH)
@@ -123,7 +121,7 @@ def run_spectral_reconstruction(filename=HDF5_FILE, image_index=None):
         # === Poisson Error Calculation ===
         # Correct and explicit Poisson error calculation:
 
-        raw_counts = hist_counts_total  # raw photon counts before correction
+        raw_counts = hist_counts_total
         raw_poisson_errors = np.sqrt(raw_counts)
 
         bin_width = ENERGY_BINS[1] - ENERGY_BINS[0]
@@ -153,7 +151,7 @@ def run_spectral_reconstruction(filename=HDF5_FILE, image_index=None):
 
         plot_solid_angle_adjusted_spectrum(
             bin_centers,
-            corrected_intensity,  # already count per bin
+            corrected_intensity,
             corrected_errors=corrected_count_errors  # sqrt(N)/Omega
         )
         plot_intensity_vs_energy(

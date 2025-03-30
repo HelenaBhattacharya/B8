@@ -89,7 +89,7 @@ def main(force_recompute=False, file_name=None):
     dE_dx_1218 = compute_energy_dispersion(E_ij_opt, x_prime_opt, ENERGY_LEVELS[1])
 
     if np.isnan(dE_dx_1188) or np.isnan(dE_dx_1218):
-        print("\n⚠️ ERROR: Invalid dE/dx values. Skipping resolution calc.")
+        print("\n ERROR: Invalid dE/dx values. Skipping resolution calc.")
     else:
         res_1188 = calc_total_energy_resolution(
             optimized_params[1], optimized_params[0], mean_fwhm_1188, dE_dx_1188, SPOT_AREA_M2
