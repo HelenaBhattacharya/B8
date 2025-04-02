@@ -2,28 +2,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 from config import CCD_SHAPE
 
-def plot_photon_counts_vs_energy(bin_centers, hist_counts, title="Summed X-ray Spectrum (All Images)"):
+def plot_photon_counts_vs_energy(bin_centers, hist_counts, bin_width, title="Summed X-ray Spectrum (All Images)"):
     """Plots photon counts vs. energy."""
     plt.figure(figsize=(8, 6))
-    plt.bar(bin_centers, hist_counts, width=1, color='blue', alpha=0.7, edgecolor='black')
+    plt.bar(bin_centers, hist_counts, width=bin_width, color='blue', alpha=0.7, edgecolor='black')
     plt.xlabel("Energy (eV)")
     plt.ylabel("Photon Count")
     plt.title(title)
     plt.grid(True)
     plt.xlim(bin_centers.min(), bin_centers.max())
     plt.show()
-
-# def plot_solid_angle_adjusted_spectrum(bin_centers, corrected_intensity):
-    #     """Plots spectrum after solid-angle correction."""
-    #     plt.figure(figsize=(8, 6))
-    #     plt.plot(bin_centers, corrected_intensity, linestyle='-', linewidth=0.5, color='red', label="Solid-Angle Corrected")
-    #     plt.xlabel("Energy (eV)")
-    #     plt.ylabel("Photon Count (Corrected)")
-    #     plt.title("Extracted X-ray Spectrum: Solid Angle Corrected")
-    #     plt.legend()
-    #     plt.grid(True)
-    #     plt.xlim(bin_centers.min(), bin_centers.max())
-    #     plt.show()
 
 def plot_solid_angle_adjusted_spectrum(bin_centers, corrected_intensity, corrected_errors):
     """Plots spectrum after solid-angle correction with Poisson error shading."""
@@ -47,39 +35,31 @@ def plot_solid_angle_adjusted_spectrum(bin_centers, corrected_intensity, correct
     plt.xlim(bin_centers.min(), bin_centers.max())
     plt.show()
 
-# def plot_intensity_vs_energy(bin_centers, corrected_intensity):
-#     """Plots intensity (Photon Count × Energy) vs. energy."""
-#     intensity = bin_centers * corrected_intensity
-#     plt.figure(figsize=(8, 6))
-#     plt.plot(bin_centers, intensity, linestyle='-', linewidth=0.5, color='green',
-#              label="Intensity (Photon Count × Energy)")
-#     plt.xlabel("Energy (eV)")
-#     plt.ylabel("Intensity")
-#     plt.title("X-ray Spectrum: Intensity vs Energy")
-#     plt.legend()
-#     plt.grid(True)
-#     plt.xlim(bin_centers.min(), bin_centers.max())
-#     plt.show()
 
 def plot_intensity_vs_energy(bin_centers, intensity, intensity_errors):
-    """Intensity plot with Poisson errors shaded."""
+    """Normalized Intensity plot with Poisson errors shaded."""
+    # Normalize intensity explicitly to [0, 1]
+    intensity_norm = (intensity - intensity.min()) / (intensity.max() - intensity.min())
+    intensity_errors_norm = intensity_errors / (intensity.max() - intensity.min())
+
     plt.figure(figsize=(8, 6))
-    plt.plot(bin_centers, intensity, linestyle='-', linewidth=0.3, color='black',
-             label="Intensity (Photon Count × Energy)")
+    plt.plot(bin_centers, intensity_norm, linestyle='-', linewidth=0.5, color='black',
+             label="Normalized Intensity")
 
     plt.fill_between(bin_centers,
-                     intensity - intensity_errors,
-                     intensity + intensity_errors,
+                     np.clip(intensity_norm - intensity_errors_norm, 0, None),
+                     np.clip(intensity_norm + intensity_errors_norm, None, 1),
                      color='green',
                      alpha=0.3,
                      label='Poisson Error')
 
     plt.xlabel("Energy (eV)")
-    plt.ylabel("Intensity (Photon Count × Energy)")
-    plt.title("X-ray Spectrum: Intensity vs Energy")
+    plt.ylabel("Normalized Intensity (a.u.)")
+    plt.title("Normalized X-ray Spectrum: Intensity vs Energy")
     plt.legend()
     plt.grid(True)
     plt.xlim(bin_centers.min(), bin_centers.max())
+    plt.ylim(0, 1.05)
     plt.show()
 
 def plot_log_intensity_vs_energy(bin_centers, corrected_intensity):
@@ -132,12 +112,13 @@ def plot_log_intensity_vs_energy(bin_centers, corrected_intensity):
 def plot_ccd_hits(x_hits_combined, y_hits_combined):
     """Plots photon hits on CCD with (0,0) at top-left."""
     plt.figure(figsize=(8, 8))
-    plt.scatter(x_hits_combined, y_hits_combined, color='cyan', s=0.1, alpha=0.7, label="Photon Hits")
+    plt.scatter(y_hits_combined, x_hits_combined, color='cyan', s=0.1, alpha=0.7, label="Photon Hits")
     plt.xlabel("CCD X Position")
     plt.ylabel("CCD Y Position")
     plt.title("Photon Hits on CCD (All Images Combined)")
     plt.xlim(0, CCD_SHAPE[1])
     plt.ylim(CCD_SHAPE[0], 0)
+
     plt.legend(markerscale=4)
     plt.grid(False)
     plt.show()
@@ -206,5 +187,13 @@ def plot_all_spectral_results(bin_centers, raw_counts, corrected_counts, x_hits,
     plot_normalized_spectrum(bin_centers, raw_counts, corrected_counts)
     plot_ccd_hits(x_hits, y_hits)
 
-
-
+def plot_solid_angle_vs_energy(energy_bins, Omega_E):
+    bin_centers = (energy_bins[:-1] + energy_bins[1:]) / 2
+    plt.figure(figsize=(10,6))
+    plt.plot(bin_centers, Omega_E, color='red', marker='.', markersize=2, linestyle='None')
+    plt.xlabel("Energy (eV)")
+    plt.ylabel("Solid Angle Ω(E)")
+    plt.title("Solid Angle summed along each energy contour")
+    plt.grid(True)
+    plt.tight_layout()
+    plt.show()

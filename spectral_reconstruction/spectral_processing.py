@@ -1,7 +1,7 @@
 import numpy as np
 from bragg_engine.mapping import compute_energy_map, rotation_matrix
 from bragg_engine.solid_angle import compute_solid_angle
-from config import CCD_SHAPE
+from config import CCD_SHAPE, PIXEL_SIZE
 
 def remove_high_ADU_pixels(adu_weighted_ccd, ccd_redistributed, high_adu_positions):
     initial_nonzero_adu = np.count_nonzero(adu_weighted_ccd)
@@ -64,6 +64,12 @@ def resolve_overlaps(spc_hits, high_adu_hits):
     overlapping_coords = spc_coords & high_adu_coords
     num_removed_overlaps = len(overlapping_coords)
 
+    # Debug printing to confirm overlap correctness:
+    if num_removed_overlaps > 0:
+        print(f"[DEBUG] Found {num_removed_overlaps} overlaps. Example coordinates:")
+        for coord in list(overlapping_coords)[:5]:  # limit print to first 5 overlaps
+            print(f"  Overlap at pixel: {coord}")
+
     # Filter out overlapping SPC hits
     clean_spc_hits = np.array([hit for hit in spc_hits if tuple(hit[:2]) not in overlapping_coords])
     clean_high_adu_hits = high_adu_hits  # High-ADU hits are kept entirely
@@ -124,13 +130,19 @@ def compute_solid_angle_map(optimized_params):
 
     return Omega_ij
 
+def simple_solid_angle_per_bin(E_ij, Omega_ij, energy_bins):
+    Omega_E = np.zeros(len(energy_bins) - 1)
+    for i, (e_min, e_max) in enumerate(zip(energy_bins[:-1], energy_bins[1:])):
+        mask = (E_ij >= e_min) & (E_ij < e_max)
+        Omega_E[i] = np.sum(Omega_ij[mask])
+    return Omega_E
 
 def solid_angle_correction(hist_counts, energy_bins, E_ij, Omega_ij):
     """
-    Applies solid-angle correction to energy histogram.
+    Applies solid-angle correction to energy histogram using fractional binning.
 
     Args:
-        hist_counts (np.ndarray): Photon counts per bin.
+        hist_counts (np.ndarray): Photon counts per energy bin.
         energy_bins (np.ndarray): Energy bin edges.
         E_ij (np.ndarray): Energy map per pixel.
         Omega_ij (np.ndarray): Solid-angle map per pixel.
@@ -138,17 +150,11 @@ def solid_angle_correction(hist_counts, energy_bins, E_ij, Omega_ij):
     Returns:
         corrected_intensity (np.ndarray): Solid-angle corrected photon counts.
     """
-    bin_width = energy_bins[1] - energy_bins[0]
-    Omega_E = np.array([
-        np.nansum(Omega_ij[(E_ij >= e) & (E_ij < e + bin_width)])
-        for e in energy_bins[:-1]
-    ])
-
+    Omega_E = simple_solid_angle_per_bin(E_ij, Omega_ij, energy_bins)
     corrected_intensity = hist_counts / Omega_E
-    corrected_intensity[np.isnan(corrected_intensity)] = 0  # Avoid NaNs
+    corrected_intensity[np.isnan(corrected_intensity)] = 0  # Avoid NaNs or Infs
 
     return corrected_intensity
-
 
 # # Helper function (placed here if needed)
 # def rotation_matrix(alpha_x, alpha_y, alpha_z):
