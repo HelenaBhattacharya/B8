@@ -89,7 +89,7 @@ python3 run_spc_engine.py --single_image 8                # Run SPC on image ind
 python3 run_spc_engine.py my_file.h5 --single_image 3
 ```
 
-> ⚠️ Running SPC over all 20 images may take **several hours**, depending on your machine.
+> ⚠️ Running SPC over all 20 images may take **several hours**, depending on your machine.  To skip this step and save time, use the precomputed outputs in folders 0/ to 19/, already included in the repository.
 
 ---
 
@@ -126,16 +126,15 @@ python3 run_unit_tests.py
 
 ## Notes on Sample Output
 
-A folder named `8/` is included in the repository to serve as a **precomputed sample**. It contains the full output of SPC + high-ADU clustering for image index 8, including:
-- Detected single-photon clusters
-- ADU-weighted CCD images
-- Photon hit maps
-- Final redistributed charge images
+Folders named `0/` through `19/` are included in the repository to serve as **precomputed reference outputs**. Each folder corresponds to a specific CCD image index and contains the full output of the SPC + high-ADU clustering pipeline, including:
+- Detected single-photon clusters (cluster_pixel_map_*.npy)
+- ADU-weighted CCD maps (adu_weighted_ccd_final_*.npy)
+- High-ADU cluster data (high_ADU_clusters_*.pkl)
+- final redistributed charge maps (ccd_redistributed_*.npy)
 
-This allows users to **run the spectral reconstruction pipeline immediately** for image 8, without first processing all 20 CCD images.
+This allows users to explore and analyse the **spectral reconstruction pipeline without reprocessing** the raw CCD images.
 
-To regenerate all image outputs locally, simply run:
-
+To regenerate all outputs locally, simply run:
 ```bash
 python3 run_spc_engine.py
 ```
