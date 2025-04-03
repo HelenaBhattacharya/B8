@@ -44,15 +44,19 @@ def process_single_image(file_name, image_index, plot_queue):
     image = images[image_index]
     pixel_values = image.flatten()
 
-    mu_fit, sigma_fit = process_pedestal_correction(file_name, image_index=image_index)
-    corrected_image = image - mu_fit
+    corrected_image, mu_fit, sigma_fit = process_pedestal_correction(file_name, image_index=image_index)
     corrected_pixel_values = corrected_image.flatten()
 
     print(f"Fitted Pedestal Mean (mu): {mu_fit:.2f} ADU")
     print(f"Fitted Pedestal Std (sigma): {sigma_fit:.2f} ADU")
     print("Pedestal subtracted from CCD data.")
 
-    adu_map, cluster_pixel_map, photon_events, high_ADU_clusters, filtered_high_ADU_clusters, thresholds = detect_photon_events(corrected_image)
+    adu_map, cluster_pixel_map, photon_events, high_ADU_clusters, filtered_high_ADU_clusters, thresholds = detect_photon_events(
+        corrected_image, sigma_N=sigma_fit
+    )
+    T_initial, T_secondary, _ = thresholds
+    print(f"T_initial (T1): {T_initial:.2f} ADU, T_secondary (T2): {T_secondary:.2f} ADU")
+
     save_spc_results(adu_map, cluster_pixel_map, high_ADU_clusters, photon_events, image_index=image_index)
 
     print(f"SPC completed for image {image_index}.")
@@ -74,13 +78,17 @@ def process_all_images(file_name, plot_queue):
 
         pixel_values = image.flatten()
 
-        mu_fit, sigma_fit = process_pedestal_correction(file_name, image_index=i)
-        corrected_image = image - mu_fit
+        corrected_image, mu_fit, sigma_fit = process_pedestal_correction(file_name, image_index=i)
         corrected_pixel_values = corrected_image.flatten()
 
         print(f"Image {i}: Fitted Pedestal Mean = {mu_fit:.2f}, Std = {sigma_fit:.2f}")
 
-        adu_map, cluster_pixel_map, photon_events, high_ADU_clusters, filtered_high_ADU_clusters, thresholds = detect_photon_events(corrected_image)
+        adu_map, cluster_pixel_map, photon_events, high_ADU_clusters, filtered_high_ADU_clusters, thresholds = detect_photon_events(
+            corrected_image, sigma_N=sigma_fit
+        )
+        T_initial, T_secondary, _ = thresholds
+        print(f"Image {i} thresholds: T_initial (T1) = {T_initial:.2f} ADU, T_secondary (T2) = {T_secondary:.2f} ADU")
+
         save_spc_results(adu_map, cluster_pixel_map, high_ADU_clusters, photon_events, image_index=i)
 
         print(f"SPC completed for image {i}.")
