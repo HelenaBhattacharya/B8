@@ -98,6 +98,7 @@ python3 run_spc_engine.py my_file.h5 --single_image 3
 ```bash
 python3 run_spectral_reconstruction.py                     # Run over all available processed images
 python3 run_spectral_reconstruction.py --image_index 7     # Run for a single image
+python3 run_spectral_reconstruction.py --images 1 2 4 6 8  # Run for several images
 python3 run_spectral_reconstruction.py my_file.h5
 ```
 
