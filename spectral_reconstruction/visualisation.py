@@ -44,7 +44,7 @@ def plot_intensity_vs_energy(bin_centers, intensity, intensity_errors):
 
     plt.figure(figsize=(8, 6))
     plt.plot(bin_centers, intensity_norm, linestyle='-', linewidth=0.5, color='black',
-             label="Normalized Intensity")
+             label="Normalised Intensity")
 
     plt.fill_between(bin_centers,
                      np.clip(intensity_norm - intensity_errors_norm, 0, None),
@@ -54,8 +54,8 @@ def plot_intensity_vs_energy(bin_centers, intensity, intensity_errors):
                      label='Poisson Error')
 
     plt.xlabel("Energy (eV)")
-    plt.ylabel("Normalized Intensity (a.u.)")
-    plt.title("Normalized X-ray Spectrum: Intensity vs Energy")
+    plt.ylabel("Normalised Intensity (a.u.)")
+    plt.title("Normalised X-ray Spectrum: Intensity vs Energy")
     plt.legend()
     plt.grid(True)
     plt.xlim(bin_centers.min(), bin_centers.max())
@@ -139,18 +139,19 @@ def plot_normalized_spectrum(bin_centers, raw_counts, corrected_counts):
     plt.xlim(bin_centers.min(), bin_centers.max())
     plt.show()
 
-# Additional visualizations from original spectral reconstruction
-
 def plot_extracted_spectrum_lineout(bin_centers, hist_counts):
     """Plots extracted X-ray spectrum lineout (ADU-weighted)."""
     plt.figure(figsize=(8, 6))
-    plt.plot(bin_centers, hist_counts, linestyle='-', linewidth=0.2, color='blue', label="Lineout Spectrum")
-    plt.xlabel("Energy (eV)")
-    plt.ylabel("Photon Count")
-    plt.title("Extracted X-ray Spectrum (SPC + High-ADU Clusters, Lineout)")
-    plt.legend()
+    plt.plot(bin_centers, hist_counts, linestyle='-', linewidth=0.7, color='blue', label="Lineout Spectrum")
+    plt.xlabel("Energy (eV)", fontsize=15)
+    plt.ylabel("Photon Count", fontsize=15)
+    plt.title("Extracted X-ray Spectrum (SPC + High-ADU Clusters, Lineout)", fontsize=15)
+    plt.xticks(fontsize=15)
+    plt.yticks(fontsize=15)
+    plt.legend(fontsize=15)
     plt.grid(True)
     plt.xlim(bin_centers.min(), bin_centers.max())
+    plt.tight_layout()
     plt.show()
 
 def plot_summed_image(summed_image):

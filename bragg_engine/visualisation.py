@@ -68,26 +68,26 @@ def plot_energy_map(image, energy_map, x_prime, y_prime, energy_levels=ENERGY_LE
         energy_levels (list): List of energy values to contour.
     """
     plt.figure(figsize=(8, 6))
-
-    # Ensure the CCD image is displayed in correct pixel space (0 to 2048)
-    extent=[0, CCD_SHAPE[1], CCD_SHAPE[0], 0]
-
-    # Plot the preprocessed CCD image
-    plt.imshow(image, cmap='hot', origin='upper', extent=extent)
-    plt.colorbar(label="Normalized Intensity")
-    plt.title("CCD Image with Isoenergy Contours")
-
-    # Overlay isoenergy contours at correct positions
+    extent = [0, CCD_SHAPE[1], CCD_SHAPE[0], 0]
+    im = plt.imshow(image, cmap='hot', origin='upper', extent=extent)
+    cbar = plt.colorbar(im)
+    cbar.set_label("Normalised Intensity", fontsize=13)
+    cbar.ax.tick_params(labelsize=13)
     colors = ['cyan', 'white']
     contour_labels = []
     for level, color in zip(energy_levels, colors):
         contour = plt.contour(x_prime, y_prime, energy_map, levels=[level], colors=color, linewidths=0.5)
-        if contour.allsegs[0]:
+        if contour.allsegs[0]:  # Only add label if the contour exists
             contour_labels.append(f"{level} eV")
+    plt.xlabel("Pixel X", fontsize=13)
+    plt.ylabel("Pixel Y", fontsize=13)
+    plt.xticks(fontsize=13)
+    plt.yticks(fontsize=13)
+    if contour_labels:
+        plt.legend(contour_labels, fontsize=13)
+    plt.title("CCD Image with Isoenergy Contours", fontsize=13)
 
-    plt.xlabel("Pixel X")
-    plt.ylabel("Pixel Y")
-    plt.legend(contour_labels)
+    plt.tight_layout()
     plt.show()
 
 
@@ -121,9 +121,17 @@ def plot_summed_image(summed_image):
         summed_image (np.ndarray): The pixel-wise summed CCD image.
     """
     plt.figure(figsize=(8, 6))
-    plt.imshow(summed_image, cmap='hot', origin='upper')
-    plt.colorbar(label="Summed ADU Intensity")
+    im = plt.imshow(summed_image, cmap='hot', origin='upper')
+    cbar = plt.colorbar(im)
+    cbar.set_label("Summed ADU Intensity", fontsize=15)
+    cbar.ax.tick_params(labelsize=15)
+    plt.xlabel("Pixel X", fontsize=15)
+    plt.ylabel("Pixel Y", fontsize=15)
+    plt.xticks(fontsize=15)
+    plt.yticks(fontsize=15)
+
+    # Title (optional, font size doesn't matter for you)
     plt.title("Summed CCD Image (20 Exposures)")
-    plt.xlabel("Pixel X")
-    plt.ylabel("Pixel Y")
+
+    plt.tight_layout()
     plt.show()

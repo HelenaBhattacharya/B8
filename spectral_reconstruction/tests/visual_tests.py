@@ -59,21 +59,20 @@ def visual_test_simple_0th_order_spectrum(file_name=str(HDF5_FILE), image_index=
     energies = energies[::-1]
     spectrum = spectrum[::-1]
 
-    # Plot explicitly and clearly labeled
     plt.figure(figsize=(10, 6))
     plt.plot(energies, spectrum, color='purple', linewidth=0.5)
-    plt.xlabel('Energy (eV)')
-    plt.ylabel('Integrated ADU Counts (Vertical Sum)')
-    plt.title(f'Simple 0th-order Spectrum (Image {image_index}) - Correct Energy Mapping')
+    plt.xlabel('Energy (eV)', fontsize=15)
+    plt.ylabel('Integrated ADU Counts (Vertical Sum)', fontsize=15)
+    plt.xticks(fontsize=15)
+    plt.yticks(fontsize=15)
+    plt.title(f'Simple 0th-order Spectrum (Image {image_index}) - Correct Energy Mapping', fontsize=15)
     plt.grid(True)
-
-    # Explicit vertical lines for known reference points
     plt.axvline(1188.0, color='red', linestyle='--', label='Ge Lα (1188 eV)')
     plt.axvline(1218.5, color='green', linestyle='--', label='Ge Lβ (1218.5 eV)')
-    plt.legend()
-
+    plt.legend(fontsize=15)
     plt.tight_layout()
     plt.show()
+
 
 def visual_test_simple_1st_order_spectrum(file_name=str(HDF5_FILE), optimized_params=None, image_index=8, start_column=50, ADU_threshold=80):
     """
@@ -99,17 +98,19 @@ def visual_test_simple_1st_order_spectrum(file_name=str(HDF5_FILE), optimized_pa
 
     plt.figure(figsize=(10, 6))
     plt.plot(energies, spectrum_counts, color='blue', linewidth=0.5)
-    plt.xlabel('Energy (eV)')
-    plt.ylabel('Integrated Photon Counts (Thresholded ADU)')
-    plt.title(f'1st-order Spectrum (Image {image_index}), Threshold {ADU_threshold} ADU')
+    plt.xlabel('Energy (eV)', fontsize=15)
+    plt.ylabel('Integrated Photon Counts (Thresholded ADU)', fontsize=15)
+    plt.xticks(fontsize=15)
+    plt.yticks(fontsize=15)
+    plt.title(f'1st-order Spectrum (Image {image_index}), Threshold {ADU_threshold} ADU', fontsize=15)
     plt.grid(True)
-
     plt.axvline(1188.0, color='red', linestyle='--', label='Ge Lα (1188 eV)')
     plt.axvline(1218.5, color='green', linestyle='--', label='Ge Lβ (1218.5 eV)')
-    plt.legend()
+    plt.legend(fontsize=15)
 
     plt.tight_layout()
     plt.show()
+
 
 def visual_test_2nd_order_spectrum(file_name=str(HDF5_FILE), optimized_params=None, image_index=8):
     """

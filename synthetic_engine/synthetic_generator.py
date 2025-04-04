@@ -30,18 +30,18 @@ def synthetic_spectrum(E_map):
     # Spectral lines (Gaussian-shaped)
     lines = [
         {'E': 1188.0, 'sigma': 2.0, 'intensity': 1.0},
-        {'E': 1218.5, 'sigma': 2.0, 'intensity': 0.9},
+        {'E': 1218.5, 'sigma': 2.0, 'intensity': 0.85},
     ]
     for line in lines:
         spectrum += line['intensity'] * np.exp(-((E_map - line['E']) ** 2) / (2 * line['sigma'] ** 2))
 
     # Flat background between 1000–1200 eV
     flat_mask = (E_map >= 1000) & (E_map <= 1185)
-    spectrum += 0.1 * flat_mask
+    spectrum += 0.2 * flat_mask
 
     # Bremsstrahlung-like exponential tail >1200 eV
     brem_mask = E_map > 1185
-    spectrum += 0.35 * np.exp(-0.005 * (E_map - 1185)) * brem_mask
+    spectrum += 0.5 * np.exp(-0.005 * (E_map - 1185)) * brem_mask
 
     return spectrum / np.max(spectrum)
 
