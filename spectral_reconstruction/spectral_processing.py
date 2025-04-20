@@ -4,6 +4,15 @@ from bragg_engine.solid_angle import compute_solid_angle
 from config import CCD_SHAPE, PIXEL_SIZE
 
 def remove_high_ADU_pixels(adu_weighted_ccd, ccd_redistributed, high_adu_positions):
+    """
+    Zeroes out pixels around high-ADU positions in both CCD maps to prevent double-counting.
+
+    Args:
+        adu_weighted_ccd (np.ndarray): SPC ADU-weighted CCD map.
+        ccd_redistributed (np.ndarray): High-ADU redistributed CCD map.
+        high_adu_positions (list or np.ndarray): (y, x) coordinates of bright pixels to mask.
+    """
+
     initial_nonzero_adu = np.count_nonzero(adu_weighted_ccd)
     initial_nonzero_redistributed = np.count_nonzero(ccd_redistributed)
 

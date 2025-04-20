@@ -75,39 +75,6 @@ def plot_log_intensity_vs_energy(bin_centers, corrected_intensity):
     plt.grid(True, which="both", linestyle="--")
     plt.xlim(bin_centers.min(), bin_centers.max())
     plt.show()
-#
-# def plot_log_intensity_vs_energy(bin_centers, corrected_intensity, corrected_intensity_errors=None):
-#     """Plots log-scaled intensity vs. energy with optional Poisson error shading."""
-#     intensity = bin_centers * corrected_intensity
-#
-#     plt.figure(figsize=(8, 6))
-#     plt.plot(bin_centers, intensity, linestyle='-', linewidth=0.5, color='black', label="Log Intensity")
-#
-#     # Optional shaded error band (only if errors are provided)
-#     if corrected_intensity_errors is not None:
-#         intensity_errors = corrected_intensity_errors * bin_centers
-#
-#         # Prevent negative values (log plot cannot handle them)
-#         lower_bound = np.clip(intensity - intensity_errors, a_min=1e-10, a_max=None)
-#         upper_bound = intensity + intensity_errors
-#
-#         plt.fill_between(bin_centers,
-#                          lower_bound,
-#                          upper_bound,
-#                          color='grey',
-#                          alpha=0.4,
-#                          label='Poisson Error')
-#
-#     plt.xlabel("Energy (eV)")
-#     plt.ylabel("Intensity")
-#     plt.yscale("log")
-#     plt.title("X-ray Spectrum: Log-Scaled Intensity")
-#     plt.legend()
-#     plt.grid(True, which="both", linestyle="--")
-#     plt.xlim(bin_centers.min(), bin_centers.max())
-#     plt.show()
-
-
 
 def plot_ccd_hits(x_hits_combined, y_hits_combined):
     """Plots photon hits on CCD with (0,0) at top-left."""

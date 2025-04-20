@@ -31,7 +31,7 @@ def visual_test_simple_0th_order_spectrum(file_name=str(HDF5_FILE), image_index=
     """
     Corrected 0th-order spectrum: explicitly mapped and reversed energy axis.
     """
-    # Define paths clearly
+
     current_dir = os.path.dirname(os.path.abspath(__file__))
     project_root = os.path.normpath(os.path.join(current_dir, '..', '..'))
     file_path = str(HDF5_FILE)
@@ -52,7 +52,6 @@ def visual_test_simple_0th_order_spectrum(file_name=str(HDF5_FILE), image_index=
     a = (energy_ref2 - energy_ref1) / (col_ref2 - col_ref1)
     b = energy_ref1 - a * col_ref1
 
-    # Map columns explicitly to energies
     energies = a * columns + b
 
     # Reverse arrays explicitly to ensure increasing energy left to right
@@ -116,8 +115,6 @@ def visual_test_2nd_order_spectrum(file_name=str(HDF5_FILE), optimized_params=No
     """
     2nd-order spectrum: Uses SPC and high-ADU data with accurate energy mapping.
     """
-
-    # Paths setup explicitly
     current_dir = os.path.dirname(os.path.abspath(__file__))
     project_root = os.path.normpath(os.path.join(current_dir, '..', '..'))
     file_path = str(HDF5_FILE)
@@ -177,7 +174,6 @@ def visual_test_2nd_order_spectrum(file_name=str(HDF5_FILE), optimized_params=No
     plt.tight_layout()
     plt.show()
 
-    # Explicit summary print statement for clarity
     print(f"Image {image_index} SPC photon hits (cleaned): {len(clean_spc_hits)}")
     print(f"Image {image_index} high-ADU photon hits: {len(clean_high_adu_hits)}")
     print(f"Overlapping hits removed: {overlaps_removed}")

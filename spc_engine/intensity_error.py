@@ -1,4 +1,3 @@
-# intensity_error.py
 import numpy as np
 
 def poisson_error(photon_counts):

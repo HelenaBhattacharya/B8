@@ -40,7 +40,7 @@ def plot_fitted_curves(image, coeffs_1188_exp, coeffs_1218_exp):
 
     # Define y-range
     y_values = np.linspace(0, image.shape[0] - 1, 1000)
-    y_relative = y_values - CCD_CENTER_Y  # Fixing Center-to-Upper Origin Issue
+    y_relative = y_values - CCD_CENTER_Y
 
     # Compute experimental quadratic fits
     x_fit_1188_exp = coeffs_1188_exp[0] * y_relative ** 2 + coeffs_1188_exp[1] * y_relative + CURVE_CENTER_1188_INIT
@@ -130,7 +130,6 @@ def plot_summed_image(summed_image):
     plt.xticks(fontsize=15)
     plt.yticks(fontsize=15)
 
-    # Title (optional, font size doesn't matter for you)
     plt.title("Summed CCD Image (20 Exposures)")
 
     plt.tight_layout()

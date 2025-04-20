@@ -1,3 +1,11 @@
+"""
+run_synthetic_engine.py
+
+Simulates synthetic CCD images, applies SPC and high-ADU detection, and compares results to a reference image.
+
+Usage:
+    python run_synthetic_engine.py
+"""
 import os
 import numpy as np
 import matplotlib.pyplot as plt
@@ -15,6 +23,14 @@ from spectral_reconstruction.spectral_processing import map_photon_energies
 
 
 def main():
+    """
+    Main function to run the synthetic CCD generation pipeline:
+    - Loads detector parameters and optimized Bragg parameters
+    - Generates synthetic CCD images and photon hits
+    - Processes the synthetic data with SPC and high-ADU detection
+    - Saves the results and comparisons to output directory
+    """
+
     # === Paths ===
     base_dir = os.path.dirname(os.path.abspath(__file__))
     detector_params_path = os.path.join(base_dir, "synthetic_engine", "detector_params.json")
@@ -33,13 +49,14 @@ def main():
     synthetic_ccd = np.zeros((ny, nx), dtype=np.float32)
     label_map = np.zeros((ny, nx), dtype=np.uint8)
 
-    # === Place photon clusters based on spectrum ===
-    placement_probs = intensity_map / np.sum(intensity_map)
-    placement_cdf = np.cumsum(placement_probs.ravel())
+    # === Simulate photon hits using spectrum intensity map ===
+    placement_probs = intensity_map / np.sum(intensity_map)  # Normalize intensity to probability
+    placement_cdf = np.cumsum(placement_probs.ravel())       # Flattened cumulative distribution
     num_clusters = 2500
     composite_ratio = 0.1
 
     for _ in trange(num_clusters, desc="Placing photon clusters"):
+        # Randomly sample weighted positions from intensity map
         flat_idx = np.searchsorted(placement_cdf, np.random.rand())
         y0, x0 = np.unravel_index(flat_idx, (ny, nx))
         cluster_type = 'composite' if np.random.rand() < composite_ratio else 'single'
@@ -52,7 +69,7 @@ def main():
             cluster_type=cluster_type
         )
 
-    # === Convert ADU → electrons → simulate CCD ===
+    # === Apply detector model: convert ADU → electrons + noise ===
     photon_hits = [
         (y, x, synthetic_ccd[y, x] * detector.adc_gain)
         for y in range(ny)
@@ -67,7 +84,7 @@ def main():
     print("Mean ADU (raw):", np.mean(final_ccd))
     print("Number of pixels > 150 ADU:", np.sum(final_ccd > 150))
 
-    # === Save outputs ===
+    # === Save synthetic data and ground truth maps ===
     np.save(os.path.join(output_dir, "synthetic_ccd_image.npy"), final_ccd)
     np.save(os.path.join(output_dir, "ground_truth_label_map.npy"), label_map)
     np.save(os.path.join(output_dir, "photon_energy_map.npy"), E_ij)
@@ -82,7 +99,7 @@ def main():
 
     # === Pedestal subtraction for SPC ===
     PEDESTAL_MU = 60
-    ccd_sub = np.clip(final_ccd.astype(float) - PEDESTAL_MU, 0, None)
+    ccd_sub = np.clip(final_ccd.astype(float) - PEDESTAL_MU, 0, None)  # Ensure non-negative
 
     # === Detect SPC photon events ===
     SIGMA_N = 9.5
@@ -95,7 +112,7 @@ def main():
     plt.figure(figsize=(8, 5))
     plt.hist(final_ccd.ravel(), bins=300, range=(0, 500), color='darkblue', alpha=0.8)
     plt.axvline(PEDESTAL_MU + SIGMA_N * 1.5, color='red', linestyle='--', label='SPC T1 Threshold')
-    plt.yscale('log')  # <-- log scale here
+    plt.yscale('log')
     plt.xlabel("Raw ADU Value", fontsize=13)
     plt.ylabel("Pixel Count (log)", fontsize=13)
     plt.xticks(fontsize=13)
@@ -104,18 +121,6 @@ def main():
     plt.legend(fontsize=13)
     plt.tight_layout()
     plt.show()
-
-    # # === Plot: Histogram of ADU Pixel Values (Raw CCD) ===
-    # plt.figure(figsize=(8, 5))
-    # plt.hist(final_ccd.ravel(), bins=300, range=(0, 500), color='darkblue', alpha=0.8)
-    # plt.axvline(PEDESTAL_MU + SIGMA_N * 1.5, color='red', linestyle='--', label='SPC T1 Threshold')
-    # plt.yscale('log')  # <-- log scale here
-    # plt.xlabel("Raw ADU Value")
-    # plt.ylabel("Pixel Count (log)")
-    # plt.title("Histogram of Pixel ADU Values (Raw CCD, Log Scale)")
-    # plt.legend()
-    # plt.tight_layout()
-    # plt.show()
 
     # === Plot: CCD After Pedestal Subtraction + T1 Threshold ===
     ccd_t1 = ccd_sub.copy()
@@ -161,7 +166,7 @@ def main():
     # === Plot Spectrum ===
     ENERGY_BINS = np.arange(1100, 1601, 2)
     bin_centers = (ENERGY_BINS[:-1] + ENERGY_BINS[1:]) / 2
-    photon_adus_clipped = np.clip(photon_adus, 1, 10)
+    photon_adus_clipped = np.clip(photon_adus, 1, 10)  # Avoid overcounting outliers
     weighted_energies = np.repeat(photon_energies, photon_adus_clipped.astype(int))
     counts, _ = np.histogram(weighted_energies, bins=ENERGY_BINS)
 
@@ -194,7 +199,7 @@ def main():
     plt.tight_layout()
     plt.show()
 
-    # === Load reference data from image 8 ===
+    # === Compare against real reference image 8 ===
     external_data_dir = os.path.join(base_dir, "8")
     cluster_map_file = os.path.join(external_data_dir, "cluster_pixel_map.npy")
     adu_weighted_file = os.path.join(external_data_dir, "adu_weighted_ccd_final.npy")
@@ -205,23 +210,21 @@ def main():
         adu_weighted_ccd = np.load(adu_weighted_file)
         ccd_redistributed = np.load(redistributed_file)
 
-        # Remove high-ADU pixels (from preprocessing)
         from spectral_reconstruction.spectral_processing import remove_high_ADU_pixels, extract_photon_hits
 
-        high_adu_positions = np.argwhere(adu_weighted_ccd > 1000)  # or whatever is used in your config
+        high_adu_positions = np.argwhere(adu_weighted_ccd > 1000)
         remove_high_ADU_pixels(adu_weighted_ccd, ccd_redistributed, high_adu_positions)
 
         spc_hits, high_adu_hits = extract_photon_hits(cluster_pixel_map, adu_weighted_ccd, ccd_redistributed)
         photon_hits_combined = np.concatenate([spc_hits, high_adu_hits])
         photon_energies_ref, photon_adus_ref = map_photon_energies(photon_hits_combined, optimized_params)
 
-        # Histogram for reference
+        # === Normalized comparison histogram ===
         ENERGY_BINS = np.arange(1100, 1601, 2)
         bin_centers = (ENERGY_BINS[:-1] + ENERGY_BINS[1:]) / 2
         ref_weighted_energies = np.repeat(photon_energies_ref, photon_adus_ref.astype(int))
         ref_counts, _ = np.histogram(ref_weighted_energies, bins=ENERGY_BINS)
 
-        # === Normalised Comparison Plot ===
         synthetic_norm = counts / np.max(counts)
         reference_norm = ref_counts / np.max(ref_counts)
 
@@ -238,23 +241,12 @@ def main():
         plt.tight_layout()
         plt.show()
 
-        # plt.figure(figsize=(10, 6))
-        # plt.plot(bin_centers, synthetic_norm, label="Synthetic Reconstructed", lw=1, color='purple')
-        # plt.plot(bin_centers, reference_norm, label="Image 8 Reference", lw=1, linestyle='--', color='blue')
-        # plt.xlabel("Energy (eV)")
-        # plt.ylabel("Normalised Intensity")
-        # plt.title("Synthetic vs Image 8 Spectrum")
-        # plt.legend()
-        # plt.grid(True, linestyle="--", alpha=0.5)
-        # plt.tight_layout()
-        # plt.show()
     else:
         print("Missing one or more reference files for image 8.")
 
     print("\nSynthetic CCD generation and analysis complete.")
 
 
+# Entry point for synthetic generation pipeline
 if __name__ == "__main__":
     main()
-
-

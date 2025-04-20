@@ -1,3 +1,17 @@
+"""
+run_bragg_engine.py
+
+Processes a CCD image to:
+- Fit quadratic curves to isoenergy spectral lines (1188 eV, 1218.5 eV)
+- Optimize Bragg parameters (D, θ̄_B, α_x, α_y)
+- Compute and print energy resolution contributions
+
+Generates plots of fitted curves, energy map, and raw/summed CCD images.
+
+Usage:
+    python bragg_engine.py [file_name] [--force-recompute]
+"""
+
 import os
 import numpy as np
 from bragg_engine.load import get_ccd_image
@@ -26,6 +40,18 @@ from config import (
 
 
 def main(force_recompute=False, file_name=None):
+    """
+    Main Bragg engine pipeline.
+
+    Loads a single CCD image, fits isoenergy curves (1188 eV and 1218.5 eV),
+    optimizes Bragg diffraction parameters, calculates energy resolution,
+    and visualizes the results.
+
+    Parameters:
+        force_recompute (bool): If True, re-runs optimization even if results exist.
+        file_name (str or None): Path to the CCD HDF5 file. If None, uses default from config.py.
+    """
+
     image_index = 8  # Always process image index 8
 
     if file_name is None:
@@ -39,7 +65,7 @@ def main(force_recompute=False, file_name=None):
     raw_image = get_ccd_image(file_name, image_index)
     processed_image = preprocess_image(raw_image)
 
-    # === Fit experimental curves and save ===
+    # === Fit experimental curves to 1188eV and 1218.5eV lines and save ===
     coeffs_1188 = fit_quadratic_curve(processed_image, x_center_1188, CCD_CENTER_Y,
                                       save_sigma_path="fitted_sigma_1188.npy")
     coeffs_1218 = fit_quadratic_curve(processed_image, x_center_1218, CCD_CENTER_Y,
@@ -68,7 +94,7 @@ def main(force_recompute=False, file_name=None):
     print(f"α_x = {optimized_params[2]:.12f}°")
     print(f"α_y = {optimized_params[3]:.12f}°")
 
-    # === Compute optimized energy map ===
+    # Optimize Bragg parameters (D, θ̄_B, α_x, α_y) using CMA-ES or load from file
     E_ij_opt, x_prime_opt, y_prime_opt = compute_optimized_energy_map()
 
     # === Reload fitted parameters ===
@@ -112,7 +138,7 @@ def main(force_recompute=False, file_name=None):
         print(f"1188 eV: {np.ceil(res_1188['total_broadening']):.0f} eV")
         print(f"1218.5 eV: {np.ceil(res_1218['total_broadening']):.0f} eV")
 
-    # === Visualization ===
+    # === Visualize CCD image, fitted curves, and energy map ===
     plot_image(raw_image, "Raw Image", cmap="viridis")
     plot_image(processed_image, "Preprocessed CCD Image", cmap='hot')
     plot_fitted_curves(processed_image, coeffs_1188_exp, coeffs_1218_exp)

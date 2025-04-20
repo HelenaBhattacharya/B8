@@ -14,6 +14,28 @@ def detect_photon_events(
     ADU_sp=SPC_ADU_SINGLE_PHOTON,
     f_Fano=SPC_FANO_FACTOR
 ):
+    """
+    Detects single-photon events and high-ADU clusters from a pedestal-subtracted CCD image.
+
+    Applies two ADU thresholds to classify pixel clusters into single-, multi-pixel SPC events
+    (1–4 pixels), or high-ADU clusters. Cluster shapes are matched using a rotated template approach.
+
+    Args:
+        ccd_image_corrected (np.ndarray): Pedestal-subtracted CCD image.
+        sigma_N (float): Noise standard deviation used for initial thresholding.
+        ADU_sp (float): Approximate ADU value of a single photon.
+        f_Fano (float): Fano factor (currently unused, reserved for future use).
+
+    Returns:
+        tuple: (
+            adu_weighted_ccd_final (np.ndarray): CCD map with ADU assigned to brightest cluster pixel,
+            cluster_pixel_map (np.ndarray): Map with cluster sizes (0 if not a photon hit),
+            photon_events (dict): Detected SPC events grouped by cluster size {1–4},
+            high_ADU_clusters (list): All irregular or saturated clusters,
+            filtered_high_ADU_clusters (list): Subset of clusters passing pixel-level ADU threshold,
+            thresholds (tuple): (T_initial, T_secondary, ADU_sp)
+        )
+    """
     # Step 1: Threshold calculation
     T_initial = 1.5 * sigma_N
     T_secondary = ADU_sp - sigma_N
@@ -125,6 +147,22 @@ def detect_photon_events(
 
 
 def save_spc_results(adu_map, cluster_pixel_map, high_ADU_clusters, photon_events, image_index):
+    """
+    Saves SPC detection results to disk for a given CCD image index.
+
+    Outputs:
+    - ADU-weighted CCD map (`adu_weighted_ccd_final.npy`)
+    - Cluster size map (`cluster_pixel_map.npy`)
+    - High ADU clusters (`high_ADU_clusters.pkl`)
+    - Single-photon hit data table (`photon_hits_single_photon_clusters.csv`)
+
+    Args:
+        adu_map (np.ndarray): Final ADU-weighted CCD output from detection.
+        cluster_pixel_map (np.ndarray): Map of SPC cluster sizes.
+        high_ADU_clusters (list): Raw high-ADU cluster information.
+        photon_events (dict): Dictionary of photon hit lists by cluster size.
+        image_index (int): Image index for naming the output folder.
+    """
     folder = str(image_index)
     os.makedirs(folder, exist_ok=True)
 

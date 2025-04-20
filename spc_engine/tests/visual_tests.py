@@ -10,8 +10,10 @@ from config import HDF5_FILE, CCD_SHAPE
 # matplotlib.use('TkAgg')
 
 # --- Real Image Processing ---
-
 def detect_single_photon_hits(image, photon_threshold=130):
+    """
+    Detects isolated single-pixel photon hits above a given threshold.
+    """
     def photon_filter(values):
         center = values[4]
         surrounding = np.array([values[i] for i in range(9) if i != 4])
@@ -26,6 +28,9 @@ def detect_single_photon_hits(image, photon_threshold=130):
 
 # --- Synthetic CCD Generation ---
 def generate_simple_synthetic_image(ccd_size=(200, 200)):
+    """
+        Generates a basic synthetic CCD image with clean SPC cluster shapes.
+        """
     synthetic_ccd_image = np.zeros(ccd_size, dtype=np.float32)
 
     cluster_shapes = {
@@ -65,6 +70,9 @@ def generate_simple_synthetic_image(ccd_size=(200, 200)):
     return synthetic_ccd_image
 
 def generate_complex_synthetic_image(ccd_size=(200, 200)):
+    """
+    Generates a synthetic CCD image with overlapping and composite clusters.
+    """
     complex_image = np.zeros(ccd_size, dtype=np.float32)
 
     # Defined shapes and composite types
@@ -143,6 +151,9 @@ def generate_complex_synthetic_image(ccd_size=(200, 200)):
 
 # --- Visual Test Using Real Data ---
 def visual_test_SPSP_real_data(HDF5_FILE_PATH=HDF5_FILE, image_index=8, photon_threshold=110):
+    """
+    Visual test for detecting SPSP hits in real CCD image data.
+    """
     ccd_image = get_ccd_image(str(HDF5_FILE_PATH), image_index)
     binary_ccd, x_hits, y_hits, num_photon_hits = detect_single_photon_hits(ccd_image, photon_threshold)
 
@@ -162,6 +173,9 @@ def visual_test_SPSP_real_data(HDF5_FILE_PATH=HDF5_FILE, image_index=8, photon_t
 
 # --- Visual Test Using SPC and High-ADU ---
 def visual_test_synthetic_processing(image_type='simple'):
+    """
+    Runs full SPC + high-ADU detection on synthetic CCD image and plots results.
+    """
     if image_type == 'simple':
         ccd_image = generate_simple_synthetic_image()
     elif image_type == 'complex':

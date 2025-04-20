@@ -34,11 +34,11 @@ def compute_energy_map(params):
     y_range = np.linspace(-height // 2, height // 2, height)
     x_grid, y_grid = np.meshgrid(x_range, y_range, indexing='ij')
 
-    # **Rotate CCD by 90 degrees clockwise** (Matching Old Implementation)
+    # **Rotate CCD by 90 degrees clockwise
     x_grid_rotated = np.rot90(x_grid, k=-1)
     y_grid_rotated = np.rot90(y_grid, k=-1)
 
-    # Convert to real-world coordinates (Matching the Old Implementation)
+    # Convert to real-world coordinates
     x_prime = -x_grid_rotated * pixel_size  #  Flip X to match physical space
     y_prime = y_grid_rotated * pixel_size  # No inversion
 

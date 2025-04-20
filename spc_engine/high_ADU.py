@@ -81,6 +81,21 @@ def save_ccd_image(ccd_redistributed, npy_filename):
 
 
 def process_high_ADU(image_index, ccd_size=CCD_SHAPE, plot_results=True):
+    """
+    Processes and redistributes charge from high-ADU clusters in a single image.
+
+    Applies an ADU threshold, estimates photon counts, redistributes charge over
+    brightest pixels, and saves output files (CSV and NPY).
+
+    Args:
+        image_index (int): Index of the CCD image to process.
+        ccd_size (tuple): Shape of the CCD detector array.
+        plot_results (bool): Reserved for future plotting (currently unused).
+
+    Returns:
+        int: Total number of estimated photon hits.
+        dict: Photon count per cluster size (1–4).
+    """
     folder = str(image_index)
     os.makedirs(folder, exist_ok=True)
 

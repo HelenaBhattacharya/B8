@@ -11,8 +11,7 @@ from bragg_engine.energy_resolution import (
 from bragg_engine.mapping import compute_energy_map, pixel_size
 from config import CCD_SHAPE
 
-# Mock values for testing (use realistic test values)
-
+# Mock values for testing
 TEST_ENERGY_LEVEL = 1200  # eV, example energy level
 SPOT_AREA_M2 = 1e-8  # Example spot area in m² for testing purposes
 SIGMA_PIXELS = 2.5  # Example fitted sigma in pixels
@@ -22,7 +21,7 @@ MOCK_PARAMS = [0.083, 37.2, -1.89, 55.8]  # Move this to global scope if not alr
 def optimized_params(tmp_path):
     path = tmp_path / "optimized_params.npy"
     np.save(path, MOCK_PARAMS)
-    return MOCK_PARAMS  # You only return the data — no need to yield/delete
+    return MOCK_PARAMS
 
 def test_compute_energy_dispersion(optimized_params):
     E_ij, x_prime, _ = compute_energy_map(MOCK_PARAMS)
@@ -42,7 +41,7 @@ def test_calc_source_broadening():
 
 
 def test_calc_rocking_curve_broadening():
-    dE_dx_pixel = 5000  # example realistic dispersion value in eV/m
+    dE_dx_pixel = 5000  # example dispersion value in eV/m
     broadening = calc_rocking_curve_broadening(SIGMA_PIXELS, dE_dx_pixel)
     assert broadening > 0, "Rocking curve broadening should be positive."
 
@@ -50,7 +49,7 @@ def test_calc_rocking_curve_broadening():
 def test_calc_total_energy_resolution():
     theta_B_deg = 37.2
     D = 0.083
-    dE_dx_pixel = 5000  # realistic dispersion in eV/m for testing
+    dE_dx_pixel = 5000
 
     resolutions = calc_total_energy_resolution(
         theta_B_deg, D, SIGMA_PIXELS, dE_dx_pixel, SPOT_AREA_M2

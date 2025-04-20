@@ -53,7 +53,6 @@ def loss_function(params, x_exp_1188, y_exp_1188, x_exp_1218, y_exp_1218):
         iso_x = x_prime_reindexed[mask]
         iso_y = y_prime_reindexed[mask]
 
-        # **Fix: Reduce threshold for missing contours to match old behavior**
         if len(iso_x) < 1 or len(iso_y) < 1:
             return np.inf  # Avoid bad solutions
 

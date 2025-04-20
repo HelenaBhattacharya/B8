@@ -101,8 +101,8 @@ def fit_quadratic_curve(image, x_center, y_center, save_sigma_path=None):
     # Perform quadratic fitting
     coeffs, residuals, _, _, _ = np.polyfit(S_exp[:, 1], S_exp[:, 0], 2, full=True)
 
-    # **Ensure sigma values are saved**
+    # **Ensure sigma values are saved
     if save_sigma_path:
-        np.save(save_sigma_path, sigma_values)  # Save sigma values
+        np.save(save_sigma_path, sigma_values)
 
     return coeffs

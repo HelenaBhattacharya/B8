@@ -58,10 +58,9 @@ def compute_energy_dispersion(E_ij, x_prime, energy_level):
     energy_column = E_ij[:, energy_index[1]]  # Extracts energy values along the vertical axis
     x_column = x_prime[:, energy_index[1]]  # Extracts x values along the same column
 
-    # **Fix: Use `pixel_size` for gradient computation**
     dE_dx = np.gradient(energy_column, PIXEL_SIZE)
 
-    # **Ensure valid dE_dx values**
+    # **Ensure valid dE_dx values
     if np.any(np.isnan(dE_dx)) or np.any(np.isinf(dE_dx)):
         raise ValueError(f"Error: Computed dE/dx contains NaN or Inf values at {energy_level} eV!")
 

@@ -91,7 +91,6 @@ def visual_optimized_vs_experimental_test():
     plt.imshow(np.zeros(CCD_SHAPE), cmap='gray', origin='upper', extent=[0, CCD_SHAPE[1], CCD_SHAPE[0], 0])
     plt.title("Comparison of Theoretical and Experimental Isoenergy Fits")
 
-    # Corrected line:
     for level, color in zip(ENERGY_LEVELS, ['cyan', 'white']):
         plt.contour(x_prime_reindexed, y_prime_reindexed, E_ij, levels=[level], colors=color, linewidths=1.0)
 

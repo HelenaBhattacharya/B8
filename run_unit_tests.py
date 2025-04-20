@@ -1,3 +1,11 @@
+"""
+run_unit_tests.py
+
+Executes all core and visual unit tests for the Bragg engine, SPC engine, and spectral reconstruction pipeline.
+
+Usage:
+    python run_unit_tests.py
+"""
 import pytest
 import os
 import bragg_engine.tests.visual_tests as bragg_visuals
@@ -8,6 +16,8 @@ from config import HDF5_FILE
 os.chdir(os.path.dirname(__file__))
 
 def run_bragg_unit_tests():
+    """Run all non-visual, non-slow unit tests for the Bragg engine."""
+
     print("\n=== Running Bragg Unit Tests ===")
     result = pytest.main([
         "bragg_engine/tests",
@@ -20,6 +30,8 @@ def run_bragg_unit_tests():
         print("✅ Bragg unit tests passed.")
 
 def run_spc_unit_tests():
+    """Run all non-visual, non-slow unit tests for the SPC engine."""
+
     print("\n=== Running SPC Unit Tests ===")
     result = pytest.main([
         "spc_engine/tests",
@@ -32,6 +44,7 @@ def run_spc_unit_tests():
         print("✅ SPC unit tests passed.")
 
 def run_spectral_unit_tests():
+    """Run all non-visual, non-slow unit tests for the spectral reconstruction pipeline."""
     print("\n=== Running Spectral Unit Tests ===")
     result = pytest.main([
         "spectral_reconstruction/tests",
@@ -44,6 +57,7 @@ def run_spectral_unit_tests():
         print("✅ Spectral unit tests passed.")
 
 def run_bragg_visual_tests():
+    """Run Bragg engine visual test suite (plots and diagnostics)."""
     print("\n=== Running Bragg Visual Tests ===")
     try:
         bragg_visuals.visual_solid_angle_test()
@@ -54,6 +68,7 @@ def run_bragg_visual_tests():
         print(f"❌ Bragg visual tests failed: {e}")
 
 def run_spc_visual_tests():
+    """Run SPC engine visual test suite using synthetic and real CCD data."""
     print("\n=== Running SPC Visual Tests ===")
     try:
         spc_visuals.visual_test_synthetic_processing("simple")
@@ -64,6 +79,7 @@ def run_spc_visual_tests():
         print(f"❌ SPC visual tests failed: {e}")
 
 def run_spectral_visual_tests():
+    """Run visual tests for the spectral reconstruction module, including multiple orders."""
     print("\n=== Running Spectral Visual Tests ===")
     try:
         spectral_visuals.visual_test_photon_energy_histogram()
@@ -79,6 +95,7 @@ def run_spectral_visual_tests():
         print(f"❌ Spectral visual tests failed: {e}")
 
 def run_all_tests():
+    """Execute all unit and visual tests across Bragg, SPC, and spectral modules."""
     run_bragg_unit_tests()
     run_spc_unit_tests()
     run_spectral_unit_tests()
